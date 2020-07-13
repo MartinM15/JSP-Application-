@@ -30,7 +30,7 @@ public class FilesDAO {
 		
 		List<Files> files = session.createQuery("from files").getResultList();
 		//session.get(Files.class, 1);
-		//session.getTransaction().commit();
+		session.getTransaction().commit();
 		return files;
 		
 		

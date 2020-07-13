@@ -4,15 +4,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Upload imagen</title>
+<title>Upload Images</title>
 </head>
 <body>
 
 <form action="ImageUpload?action=filesUpload" method="post" enctype="multipart/form-data">
-Select Imagen: <input type="file" name="files" multiple />
+Select Images : <input type="file" name="files" multiple />
 
 <input type="submit" value="upload"/>
-
+<a href="${pageContext.request.contextPath}/ImageUpload?action=listingImages">View Available Image</a>
 
 </form>
 

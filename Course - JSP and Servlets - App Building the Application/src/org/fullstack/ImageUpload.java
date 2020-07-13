@@ -33,13 +33,27 @@ public class ImageUpload extends HttpServlet {
 		case "filesUpload":
 			filesUpload(request, response);
 			break;
+		
+		default:
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+		
+		}
+		
+	
+	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String action = request.getParameter("action");
+		
+		
+		switch (action) {
 		case "listingImages":
 			listingImages(request,response);
 		
 			break;
 		default:
 			request.getRequestDispatcher("index.jsp").forward(request, response);
-			break;
+		
 		}
 		
 	
@@ -65,26 +79,23 @@ public class ImageUpload extends HttpServlet {
 			List<FileItem> images = upload.parseRequest(request);
 			for(FileItem image : images) {
 				String name = image.getName();	
-				
-				
 				try {
-					System.out.println(name);
-					File file = new File((path+name));
-					if(!file.exists()) {
-						new FilesDAO().addFilesDetails(new Files(name));
-						image.write(file);
-					}
-					listingImages(request, response);
-			
+					name = name.substring(name.lastIndexOf("\\") + 1);	
+					//listingImages(request, response);
 				} catch (Exception e) {
-					
 					e.printStackTrace();
+					}
+				System.out.println(name);
+				File file = new File(path + name );
+				if(!file.exists()) {
+					new FilesDAO().addFilesDetails(new Files(name));
+					image.write(file);
 				}
 			}
-		} catch (FileUploadException e) {
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
-		
+		listingImages(request, response);
 	}
 }
